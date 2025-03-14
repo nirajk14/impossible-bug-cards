@@ -1,0 +1,91 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Source/Boss2.gd" type="Script" id=1]
+[ext_resource path="res://assets/boss2.png" type="Texture2D" id=2]
+[ext_resource path="res://fonts/birchstd.tres" type="FontFile" id=3]
+[ext_resource path="res://assets/boss2-death1.png" type="Texture2D" id=4]
+[ext_resource path="res://assets/boss2-death2.png" type="Texture2D" id=5]
+[ext_resource path="res://assets/boss2-death3.png" type="Texture2D" id=6]
+[ext_resource path="res://assets/boss2-death4.png" type="Texture2D" id=7]
+[ext_resource path="res://assets/boss2-deathend.png" type="Texture2D" id=8]
+[ext_resource path="res://assets/boss2-1.png" type="Texture2D" id=9]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 95.6064, 157.638 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 75.8128, 137.262 )
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 2 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "hit",
+"speed": 5.0
+} ]
+
+[node name="Boss2" type="CharacterBody2D"]
+scale = Vector2( 0.5, 0.5 )
+collision_layer = 36
+collision_mask = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_horizontal_guides_": [ -45.2382 ]
+}
+
+[node name="boss2" type="Sprite2D" parent="."]
+texture = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2( -120.802, 53.6621 )
+
+[node name="Position2D2" type="Marker2D" parent="."]
+position = Vector2( -408.671, -17.3364 )
+
+[node name="Position2D3" type="Marker2D" parent="."]
+position = Vector2( -122.845, -98.1429 )
+
+[node name="Position2D4" type="Marker2D" parent="."]
+position = Vector2( -414.266, -167.316 )
+
+[node name="Position2D5" type="Marker2D" parent="."]
+position = Vector2( -394.346, 170 )
+
+[node name="Damagebox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Damagebox"]
+modulate = Color( 0.286275, 0.941176, 0.101961, 1 )
+position = Vector2( 1.39667, -4.19002 )
+shape = SubResource( 2 )
+
+[node name="Label" type="Label" parent="."]
+offset_left = -74.0
+offset_top = -221.0
+offset_right = 83.0
+offset_bottom = -157.0
+theme_override_fonts/font = ExtResource( 3 )
+theme_override_colors/font_color = Color( 1, 0, 0, 1 )
+theme_override_colors/font_outline_color = Color( 0, 0, 0, 1 )
+theme_override_colors/font_shadow_color = Color( 0.941176, 0.843137, 0.0313726, 1 )
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+frames = SubResource( 3 )
+
+[node name="AnimatedSprite2" type="AnimatedSprite2D" parent="."]
+frames = SubResource( 4 )
+animation = "hit"
+[connection signal="area_shape_entered" from="Damagebox" to="." method="_on_Area2D_area_shape_entered"]
+[connection signal="area_shape_exited" from="Damagebox" to="." method="_on_Damagebox_area_shape_exited"]
